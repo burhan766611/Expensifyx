@@ -1,0 +1,180 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orgMembers    OrgMember[]
+  expenses      Expense[]
+  approvals     ExpenseApproval[]
+  auditLogs     AuditLog[]
+  refreshTokens RefreshToken[]
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members      OrgMember[]
+  expenses     Expense[]
+  subscription Subscription?
+  invites      Invite[]
+  auditLogs    AuditLog[]
+}
+
+model OrgMember {
+  id       String   @id @default(uuid())
+  role     Role
+  joinedAt DateTime @default(now())
+
+  userId String
+  orgId  String
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orgId])
+  @@index([orgId])
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MANAGER
+  MEMBER
+}
+
+model Expense {
+  id          String        @id @default(uuid())
+  amount      Decimal
+  category    String
+  description String?
+  receiptUrl  String?
+  status      ExpenseStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  userId String
+  orgId  String
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org              Organization      @relation(fields: [orgId], references: [id])
+  expenseApprovals ExpenseApproval[]
+
+  @@index([orgId])
+  @@index([userId])
+  @@index([orgId, status])
+}
+
+enum ExpenseStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model ExpenseApproval {
+  id        String           @id @default(uuid())
+  decision  ApprovalDecision
+  comment   String?
+  decidedAt DateTime         @default(now())
+
+  expenseId    String
+  approvedById String
+
+  expense    Expense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  approvedBy User    @relation(fields: [approvedById], references: [id], onDelete: Cascade)
+
+  @@unique([expenseId, approvedById])
+}
+
+enum ApprovalDecision {
+  APPROVED
+  REJECTED
+}
+
+model Invite {
+  id        String   @id @default(uuid())
+  email     String
+  role      Role
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([email, orgId])
+  @@index([orgId])
+}
+
+enum SubscriptionPlan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+}
+
+model Subscription {
+  id        String             @id @default(uuid())
+  plan      SubscriptionPlan
+  status    SubscriptionStatus
+  stripeId  String
+  startedAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  orgId String       @unique
+  org   Organization @relation(fields: [orgId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  userId String
+  orgId  String
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org  Organization @relation(fields: [orgId], references: [id])
+
+  @@index([orgId, createdAt])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  revoked   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

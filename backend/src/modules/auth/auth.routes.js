@@ -1,0 +1,14 @@
+import { Router } from "express";
+import * as authController from "./auth.controller.js";
+import { authMiddleware } from "../../../middlewares/auth.middleware.js";
+
+const router = Router();
+
+// router.post("/signup",  )
+router.post("/register", authController.register);
+router.post("/login", authController.login);
+router.post("/refresh", authController.refreshToken);
+router.post("/logout", authController.logout);
+router.get("/me", authMiddleware, authController.authMe);
+
+export default router;
