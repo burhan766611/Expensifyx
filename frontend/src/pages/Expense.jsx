@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import api from "../api/axios";
 import TopBar from "./dashboard/TopBar";
 import InviteMemberPanel from "./Invite/InviteMemberPanel";
+import { useNavigate } from "react-router-dom";
 
 const Expense = () => {
+  const navigate = useNavigate();
   const [expenseData, setExpenseData] = useState({
     amount: "",
     category: "",
@@ -52,53 +54,6 @@ const Expense = () => {
     return data.secure_url;
   };
 
-  // const handleExpense = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     setUploading(true);
-
-  //     let receiptUrl;
-
-  //     if (recieptFile) {
-  //       receiptUrl = await uploadReceiptToCloudinary(recieptFile);
-  //     }
-  //     console.log(receiptUrl);
-
-  //     const payload = {
-  //       amount: Number(expenseData.amount),
-  //       category: expenseData.category.trim(),
-  //     };
-
-  //     if (expenseData.description.trim()) {
-  //       payload.description = expenseData.description.trim();
-  //     }
-
-  //     if (receiptUrl) {
-  //       payload.receiptUrl = receiptUrl;
-  //     }
-  //     console.log(receiptUrl);
-
-  //     console.log(payload);
-
-  //     const res = await api.post("/expenses", payload, {
-  //       withCredentials: true,
-  //     });
-
-  //     console.log(res.data);
-
-  //     setRecieptFile(null);
-  //   } catch (err) {
-  //     console.log(err.response?.data || err);
-  //   } finally {
-  //     setExpenseData({
-  //       amount: "",
-  //       category: "",
-  //       description: "",
-  //     });
-  //     setUploading(false);
-  //   }
-  // };
 
   const handleExpense = async (e) => {
     e.preventDefault();
@@ -129,6 +84,7 @@ const Expense = () => {
 
       const res = await api.post("/expenses", payload);
       console.log(res.data);
+      navigate("/dash");
     } catch (err) {
       console.log(err.response?.data || err);
     } finally {
@@ -141,22 +97,6 @@ const Expense = () => {
       setUploading(false);
     }
   };
-
-  // const handleInvite = async (e) => {
-  //   e.preventDefault();
-  //   console.log(inviteData);
-  //   try {
-  //     const res = await api.post("/invites", inviteData);
-  //     console.log(res.data);
-  //   } catch (err) {
-  //     console.log(err.response?.data?.message);
-  //   } finally {
-  //     setInviteData({
-  //       email: "",
-  //       role: "",
-  //     });
-  //   }
-  // };
 
   const handleFileChange = (file) => {
     if (!file) return;
@@ -344,6 +284,70 @@ const Expense = () => {
 };
 
 export default Expense;
+
+// const handleExpense = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     setUploading(true);
+
+  //     let receiptUrl;
+
+  //     if (recieptFile) {
+  //       receiptUrl = await uploadReceiptToCloudinary(recieptFile);
+  //     }
+  //     console.log(receiptUrl);
+
+  //     const payload = {
+  //       amount: Number(expenseData.amount),
+  //       category: expenseData.category.trim(),
+  //     };
+
+  //     if (expenseData.description.trim()) {
+  //       payload.description = expenseData.description.trim();
+  //     }
+
+  //     if (receiptUrl) {
+  //       payload.receiptUrl = receiptUrl;
+  //     }
+  //     console.log(receiptUrl);
+
+  //     console.log(payload);
+
+  //     const res = await api.post("/expenses", payload, {
+  //       withCredentials: true,
+  //     });
+
+  //     console.log(res.data);
+
+  //     setRecieptFile(null);
+  //   } catch (err) {
+  //     console.log(err.response?.data || err);
+  //   } finally {
+  //     setExpenseData({
+  //       amount: "",
+  //       category: "",
+  //       description: "",
+  //     });
+  //     setUploading(false);
+  //   }
+  // };
+
+  // const handleInvite = async (e) => {
+  //   e.preventDefault();
+  //   console.log(inviteData);
+  //   try {
+  //     const res = await api.post("/invites", inviteData);
+  //     console.log(res.data);
+  //   } catch (err) {
+  //     console.log(err.response?.data?.message);
+  //   } finally {
+  //     setInviteData({
+  //       email: "",
+  //       role: "",
+  //     });
+  //   }
+  // };
 
 {
   /* INVITE */
