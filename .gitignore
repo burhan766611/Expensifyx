@@ -62,3 +62,6 @@ Thumbs.db
 # =========================
 docker-data/
 
+
+# Local Netlify folder
+.netlify
