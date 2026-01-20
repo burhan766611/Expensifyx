@@ -33,19 +33,11 @@ const Dash = () => {
 
   const [inviteOpen, setInviteOpen] = useState(false);
 
-  // const getStats = (data) => {
-  //   setStats({
-  //       totalAmount: data.totalAmount.amount,
-  //       totalCount: data.totalCount._all,
-  //       monthAmount : data.totalMonthAmount[0].monthly_sum,
-  //       pendingCount: data.totalPending,
-  //       approvedCount: data.totalApproved
-  //   })
-  // }
-
   const getStats = (analytics) => {
+      console.log("Analytics : ", analytics);
+      console.log("Analytics totalamount : ", analytics.totalAmount.amount);
     setStats({
-      totalAmount: analytics.totalAmount?._sum?.amount || 0,
+      totalAmount: analytics.totalAmount?.amount || 0,
       totalCount: analytics.totalCount?._all || 0,
       monthAmount: analytics.totalMonthAmount?.[0]?.monthly_sum || 0,
       pendingCount: analytics.totalPending || 0,
@@ -176,3 +168,13 @@ const Dash = () => {
 };
 
 export default Dash;
+
+  // const getStats = (data) => {
+  //   setStats({
+  //       totalAmount: data.totalAmount.amount,
+  //       totalCount: data.totalCount._all,
+  //       monthAmount : data.totalMonthAmount[0].monthly_sum,
+  //       pendingCount: data.totalPending,
+  //       approvedCount: data.totalApproved
+  //   })
+  // }
