@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext }from "../context/AuthContext";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -14,7 +15,14 @@ const Navbar = () => {
       <div className="h-full w-full pt-10 pb-5 px-5 sm:px-10 flex flex-col sm:flex-row justify-between items-center">
         <h1 className="text-2xl font-bold sm:ml-20 mb-4 sm:mb-0">
           <Link to="/" className="h-full w-full">
-            ExpensifyX
+          <motion.span
+          whileHover={{
+            color: "#1fc29f"
+          }}
+          >
+ExpensifyX
+          </motion.span>
+            
           </Link>
         </h1>
 

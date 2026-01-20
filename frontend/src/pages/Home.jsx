@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="h-full w-full bg-white">
+      <div className="h-full w-full bg-white overflow-x-hidden ">
         <div className="h-full w-full text-gray-700/90">
           {/* NAVBAR */}
           {/* <div className="h-full w-full pt-10 pb-5 px-5 sm:px-10 flex flex-col sm:flex-row justify-between items-center">
@@ -61,8 +61,8 @@ const Home = () => {
           </div> */}
 
           {/* HERO */}
-          <div className="h-full w-full p-6 sm:p-20 pt-5 sm:pt-20 bg-[url(/bg.png)]">
-            <div className="h-full w-full px-0 sm:px-20 flex flex-col lg:flex-row gap-10 lg:gap-30">
+          <div className="h-full w-full p-6 sm:p-20 pt-5 sm:pt-20 bg-[url(/b1.png)]">
+            <div className="h-full w-full px-0 sm:px-20 flex flex-col lg:flex-row gap-10 lg:gap-30  ">
               {/* LEFT */}
               <div className="pr-0 sm:pr-3">
                 <p className="text-3xl sm:text-5xl leading-tight sm:leading-14 font-bold">
@@ -104,12 +104,61 @@ const Home = () => {
               </div>
 
               {/* RIGHT */}
-              <div className="hidden lg:block">
-                <p className="text-5xl font-bold">
+
+              {/* <p className="text-5xl font-bold">
                   Less stress when sharing expenses
-                </p>
+                </p> */}
+              {/* <div className="hidden lg:block">
+                <div className="h-full w-full">
+                  <div className="h-full">
+                    <div className=" h-full w-full flex justify-between items-center">
+                      <img
+                        src="/dashboard.png"
+                        className="h-50 rounded-2xl p-1 shadow-2xl rotate-12"
+                      />
+                      <div className="h-full w-full">
+                        <img
+                          src="/expense.png"
+                          className=" rounded-2xl shadow-2xl -rotate-12 "
+                        />
+                        <img
+                          src="/invitepanel.png"
+                          className="h-60 rounded-2xl shadow-2xl rotate-17 mt-5"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+              {/* RIGHT */}
+              <div className="w-full h-full lg:w-1/2 flex justify-center items-center md:mt-10 lg:mt-25 sm: mt-5">
+                <div className="relative flex flex-col sm:flex-row gap-6 sm:gap-10 items-center justify-center">
+                  {/* Dashboard */}
+                  <motion.img
+                    initial={{
+                      rotate: 12,
+                    }}
+                    whileHover={{
+                      rotate: 0,
+                    }}
+                    src="/expense.png"
+                    className="w-[60%] shadow-2xl rounded-2xl lg:mb-15"
+                    alt=""
+                  />
+                  <motion.img
+                    initial={{
+                      rotate: -15,
+                    }}
+                    whileHover={{
+                      rotate: 0,
+                    }}
+                    src="/invitepanel.png"
+                    className="w-[60%] rounded-2xl shadow-2xl mt-15"
+                  />
+                </div>
               </div>
             </div>
+            <div className="p-30"></div>
           </div>
         </div>
       </div>
@@ -224,4 +273,17 @@ export default Home;
 //       </div>
 //     </div>
 //   </div>
+// {/* <div className="border-2 border-[#1fc29f] rounded-2xl mt-30">
+//   <motion.img
+//     whileHover={{
+//       scale: 1.1
+//     }}
+//     transition={{
+//       type: "spring"
+//     }}
+//     src="dashboard.png"
+//     alt=""
+//     className="rounded-2xl shadow-2xl  p-2"
+//   />
+// </div>
 // </>

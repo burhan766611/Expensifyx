@@ -60,12 +60,12 @@ export default function Login() {
   return (
     <>
       <Navbar />
-      <div className="w-full h-full bg-[url(/bg.png)] pb-2">
+      <div className="w-full h-screen bg-[url(/b1.png)] pb-2">
         <div className="my-5 flex justify-center items-center px-4 sm:px-0">
           <form
             onSubmit={handleSubmit}
             className="rounded-2xl px-6 sm:px-18 py-8 sm:py-10 bg-white shadow-xl 
-                   w-full sm:w-[70%] lg:w-[45%]"
+                   w-full sm:w-[70%] lg:w-[45%] mt-15"
           >
             <h1 className="text-2xl sm:text-3xl font-light mb-8 sm:mb-10">
               Log in
